@@ -76,6 +76,7 @@ export const RecordInList: React.FC<RecordInListProps> = (props) => {
       params: actionParams,
       actionResponseHandler,
       push: history.push,
+      location,
     })(event)
   )
 

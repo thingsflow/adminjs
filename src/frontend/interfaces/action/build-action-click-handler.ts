@@ -46,7 +46,7 @@ export const buildActionClickHandler = (
         hrefParams.append(key, value)
       })
 
-      push(`${url.pathname}${hrefParams.toString()}`, { previousPage: window.location.href })
+      push(`${url.pathname}?${hrefParams.toString()}`, { previousPage: window.location.href })
     }
   }
 
