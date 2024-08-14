@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
+import { useLocation } from 'react-router'
 import { useHistory } from 'react-router-dom'
 import {
   Placeholder, TableRow, TableCell, CheckBox, ButtonGroup,
@@ -28,6 +29,7 @@ export const RecordInList: React.FC<RecordInListProps> = (props) => {
   } = props
   const [record, setRecord] = useState<RecordJSON>(recordFromProps)
   const history = useHistory()
+  const location = useLocation()
 
   const handleActionCallback = useCallback((actionResponse: ActionResponse) => {
     if (actionResponse.record && !actionResponse.redirectUrl) {
@@ -61,6 +63,7 @@ export const RecordInList: React.FC<RecordInListProps> = (props) => {
         params: { resourceId: resource.id, recordId: record.id },
         actionResponseHandler,
         push: history.push,
+        location,
       })(event)
     }
   }

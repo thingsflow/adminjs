@@ -1,6 +1,7 @@
 /* eslint-disable no-restricted-globals */
 /* eslint-disable no-undef */
 /* eslint-disable no-alert */
+import { Location } from 'history'
 import { DifferentActionParams, useActionResponseHandler } from '../../hooks'
 import { actionHasComponent } from './action-has-component'
 import { actionHref } from './action-href'
@@ -12,6 +13,7 @@ export type BuildActionClickOptions = {
   params: DifferentActionParams;
   actionResponseHandler: ReturnType<typeof useActionResponseHandler>;
   push: (path: string, state?: any) => void;
+  location?: Location;
 }
 
 export type BuildActionClickReturn = (event: any) => any
@@ -37,7 +39,14 @@ export const buildActionClickHandler = (
     if (actionHasComponent(action)) {
       callApi()
     } else if (href) {
-      push(href, { previousPage: window.location.href })
+      const url = new URL(`relative:${href}`)
+      const hrefParams = new URLSearchParams(url.search)
+      const currentParams = new URLSearchParams(action.showInDrawer ? location?.search ?? '' : '')
+      Object.entries(Object.fromEntries(currentParams.entries())).forEach(([key, value]) => {
+        hrefParams.append(key, value)
+      })
+
+      push(`${url.pathname}${hrefParams.toString()}`, { previousPage: window.location.href })
     }
   }
 

@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router'
+import { useHistory, useLocation } from 'react-router'
 
 import { ActionResponse } from '../../../backend/actions/action.interface'
 
@@ -26,6 +26,7 @@ export function useAction<K extends ActionResponse>(
   onActionCall?: ActionCallCallback,
 ): UseActionResult<K> {
   const history = useHistory()
+  const location = useLocation()
 
   const actionResponseHandler = useActionResponseHandler(onActionCall)
 
@@ -42,6 +43,7 @@ export function useAction<K extends ActionResponse>(
     params,
     actionResponseHandler,
     push: history.push,
+    location,
   })
 
   return {

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
 import { Box, Badge, H3, H2, ButtonGroup, cssClass } from '@adminjs/design-system'
-import { useHistory } from 'react-router'
+import { useHistory, useLocation } from 'react-router'
 
 import Breadcrumbs from '../breadcrumbs'
 import { ActionHeaderProps } from './action-header-props'
@@ -30,6 +30,7 @@ export const ActionHeader: React.FC<ActionHeaderProps> = (props) => {
 
   const { translateButton } = useTranslation()
   const history = useHistory()
+  const location = useLocation()
   const actionResponseHandler = useActionResponseHandler(actionPerformed)
 
   if (action.hideActionHeader) {
@@ -45,6 +46,7 @@ export const ActionHeader: React.FC<ActionHeaderProps> = (props) => {
       params,
       actionResponseHandler,
       push: history.push,
+      location,
     })(event)
   )
 
